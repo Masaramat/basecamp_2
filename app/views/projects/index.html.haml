@@ -7,6 +7,6 @@
 
 - @projects.each do |project|
     = link_to project.name, project_path(project)
-    = project.users.pluck(:email).join(", ")
+    = project.users.pluck(:firstname).join(", ")
     %br
 

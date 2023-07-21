@@ -6,4 +6,11 @@ class User < ApplicationRecord
 
   has_many :project_users
   has_many :projects, :through => :project_users
+
+  enum role: [:user, :admin]
+  after_initialize :set_default_role, :if => :new_record?
+  
+  def set_default_role
+    self.role ||= :user
+  end
 end
