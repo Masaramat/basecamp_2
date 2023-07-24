@@ -1,6 +1,6 @@
 
-%div.container.d-flex.justify-content-center
-    %div.col-8
+%div.container
+    %div
         %div.card
             %div.card-header
                 <h3>Projects</h3>
@@ -11,13 +11,15 @@
                         %tr
                             %th Project name
                             %th Created by
+                            %th Action
                     %tbody
                         - @projects.each do |project|
                             %tr
-                                %td= link_to project.name, project_path(project)
+                                %td= link_to project.name, project_path(project), class: "nav-link text-primary"
                                 %td
                                     - full_names = project.users.pluck(:firstname, :lastname).map { |first, last| "#{first} #{last}" }
-                                    = full_names.join(", ")    
+                                    = full_names.join(", ")   
+                                %td= link_to "Edit", edit_project_path(project), class: "nav-link text-primary"     
 
                 = link_to "New Project", new_project_path, class: "btn btn-secondary"        
                     
