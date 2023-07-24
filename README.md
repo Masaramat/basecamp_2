@@ -38,7 +38,7 @@ This project is built using Ruby on Rails. The application includes a database f
 5. Set up the database: `rails db:migrate`
 6. To set up an admin account for testing run the following commands
     - `rails c`
-    - `user = user = User.new(email: "admin@gmail.com", firstname: "super", lastname: "admin",password: "password", password_confirmation: "password")`
+    - `user = User.new(email: "admin@gmail.com", firstname: "super", lastname: "admin",password: "password", password_confirmation: "password")`
     - `user.role = 1`
     - `user.save`
 7. Start the application: `rails server`
