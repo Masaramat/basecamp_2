@@ -1,12 +1,25 @@
-<h1>Projects</h1>
 
-= link_to "New Project", new_project_path
+%div.container.d-flex.justify-content-center
+    %div.col-8
+        %div.card
+            %div.card-header
+                <h3>Projects</h3>
+            %div.card-body
 
-%br
-%br
+                %table.table
+                    %thead
+                        %tr
+                            %th Project name
+                            %th Created by
+                    %tbody
+                        - @projects.each do |project|
+                            %tr
+                                %td= link_to project.name, project_path(project)
+                                %td
+                                    - full_names = project.users.pluck(:firstname, :lastname).map { |first, last| "#{first} #{last}" }
+                                    = full_names.join(", ")    
 
-- @projects.each do |project|
-    = link_to project.name, project_path(project)
-    = project.users.pluck(:firstname).join(", ")
-    %br
+                = link_to "New Project", new_project_path, class: "btn btn-secondary"        
+                    
+                   
 

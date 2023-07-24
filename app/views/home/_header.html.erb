@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Ninth navbar example">
+    <div class="container-xl">
+        <%= link_to 'Basecamp', root_path, class:'navbar-brand' %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" >
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+          
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+         
+        </ul>
+        
+           
+      
+         <ul class= 'navbar-nav  d-flex flex-end'>
+
+          <% if user_signed_in? %>
+            <li class="nav-item dropdown">
+             <%= link_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'nav-link' %>
+              
+            </li>
+            <li class="nav-item dropdown">
+              <%= link_to 'Edit profile', edit_user_registration_path, class:'nav-link' %>
+                
+            </li>
+          <% else %>
+            <li class="nav-item dropdown">
+              <%= link_to 'Sign up', new_user_registration_path, class:'nav-link' %>
+                
+            </li>
+              <li class="nav-item dropdown">
+              <%= link_to 'Sign in', new_user_session_path, class:'nav-link' %>
+                
+            </li>
+          <% end %>
+          
+      </ul>
+      </div>
+    </div>
+  </nav>

@@ -1,7 +1,17 @@
-%h1 Project 
+%div.container.d-flex.justify-content-center
+    %div.col-8
+        %div.card
+            %div.card-header
+                %h3 Project view
+            %div.card-body
+                %p.muted Project name:
+                %h5= @project.name
+                %p.muted Creator:
+                %h5 
+                    - full_names = @project.users.pluck(:firstname, :lastname).map { |first, last| "#{first} #{last}" }
+                    = full_names.join(", ")
 
-= link_to "All projects", projects_path 
+                = link_to "Back to all projects", projects_path, class: "btn btn-secondary mt-3" 
 
-%br
+                
 
-= @project.name
