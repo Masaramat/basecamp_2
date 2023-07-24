@@ -1,6 +1,5 @@
-# Welcome to My Basecamp 1
-MyBasecamp1 is a web-based project management tool inspired by the original Basecamp. It allows users to create accounts, log in, and manage projects. The application is divided into three parts: User Registration, Session Management, and Project Management.
----
+## Welcome to My Basecamp 1
+MyBasecamp1 is a web-based project management tool inspired by the original Basecamp. It allows users to create accounts, log in, and manage projects.
 
 ## Task
 The tasks are splitted into three parts which include:
@@ -23,9 +22,7 @@ The tasks are splitted into three parts which include:
 - `Project #destroy`: Enables users to delete a project.
 
 ## Description
-
-MyBasecamp1 is a web-based project management tool inspired by the original Basecamp. It allows users to create accounts, log in, and manage projects. The application is divided into three parts: User Registration, Session Management, and Project Management.
----
+The application is divided into three parts: User Registration, Session Management, and Project Management. 
 
 ### Technical Details
 
