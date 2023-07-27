@@ -12,6 +12,7 @@ class ProjectsController < ApplicationController
     end
     def show
         @project = Project.find(params['id'])
+        @topics = @project.topics.limit(2)
     end
     def new
         @project = Project.new
@@ -19,7 +20,6 @@ class ProjectsController < ApplicationController
     def create
         @project = Project.new(permitted_params)
         @project.users << current_user
-        puts @project
         if @project.save
             redirect_to project_path(@project) 
         else

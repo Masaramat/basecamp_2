@@ -17,6 +17,18 @@
 
                 = link_to "Delete project", project_path(@project), data: { confirm: "Are you sure you want to delete this project?", turbo_method: :delete }, class: 'btn btn-danger mt-3'
                 = link_to "Back to all projects", projects_path, class: "btn btn-secondary mt-3" 
+    %div.col-4
+        %div.card
+            %div.card-header
+                %h3 Recent threads
+            %div.card-body
+                - @topics.each do |topic|
+                    %h4= link_to topic.topic, project_topic_path(topic), class: "nav-link text-primary"
+                    %p
+                        - creator =  "Created by: #{topic.user.firstname}"
+                        = creator
+                = link_to "View all threads", project_topics_path(@project), class: "btn btn-secondary btn-sm"
+                = link_to "New thread", new_project_topic_path(@project), class: "btn btn-secondary btn-sm"
                 
 
                 

@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   # defines relationship for users and projects and ensures relationship is destroyed with user
   has_many :project_users, dependent: :destroy
+  has_many :topics, dependent: :destroy
   has_many :projects, :through => :project_users
   # Enum to represent roles which is represented by the index of the enum
   enum role: [:user, :admin]
