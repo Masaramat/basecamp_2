@@ -2,7 +2,7 @@
 
 class TopicsController < ApplicationController
     before_action :authenticate_user!
-    before_action :admin_role, only: [:new, :create]
+    before_action :authorize_user!, only: [:new, :create]
   # GET /topics
   def index
     if params[:project_id].present?
@@ -23,6 +23,7 @@ class TopicsController < ApplicationController
   def new
     @topic = Topic.new
     @project = Project.find(params[:project_id])
+    p @project
   end
 
   # POST /topics
@@ -69,8 +70,8 @@ class TopicsController < ApplicationController
     params.require(:topic).permit(:topic)
   end
 
-  def admin_role 
-    unless current_user && current_user.role == "admin"
+  def authorize_user!
+    unless @project.users.include?(current_user) && current_user.admin?
         flash[:alert] = "Only admins can create a thread."
         redirect_to project_topic_path(@project)
     end

@@ -78,7 +78,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def authenticate_admin!
-    redirect_to root_path, alert: 'Access denied.' unless current_user.admin?
+    redirect_to root_path, notice: 'Access denied.' unless current_user.admin?
   end
 end
 
