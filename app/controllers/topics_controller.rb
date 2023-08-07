@@ -1,6 +1,7 @@
 # app/controllers/topics_controller.rb
 
 class TopicsController < ApplicationController
+    before_action :set_project, only: [:show, :edit, :update, :destroy, :authorize_user!]
     before_action :authenticate_user!
     before_action :authorize_user!, only: [:new, :create]
   # GET /topics
@@ -17,6 +18,7 @@ class TopicsController < ApplicationController
   def show
     @topic = Topic.find(params[:id])
     @project = Project.find(params[:project_id])
+    @messages = @topic.messages
   end
 
   # GET /topics/new
@@ -42,15 +44,19 @@ class TopicsController < ApplicationController
 
   # GET /topics/:id/edit
   def edit
-    @topic = Topic.find(params[:id])
+    
+    @project = Project.find(params[:project_id])
+    @topic = @project.topics.find(params[:id])
+    
   end
 
   # PATCH/PUT /topics/:id
   def update
+    @project = Project.find(params[:project_id])
     @topic = Topic.find(params[:id])
 
     if @topic.update(topic_params)
-      redirect_to @topic, notice: 'Topic was successfully updated.'
+      redirect_to project_topic_path(@project, @topic), notice: 'Topic was successfully updated.'
     else
       render :edit
     end
@@ -58,10 +64,13 @@ class TopicsController < ApplicationController
 
   # DELETE /topics/:id
   def destroy
-    @topic = Topic.find(params[:id])
+    @project = Project.find(params[:project_id])
+    @topic = @project.topics.find(params[:id])
     @topic.destroy
-
-    redirect_to topics_url, notice: 'Topic was successfully destroyed.'
+  
+    # Optionally, you can redirect to a different page after the delete.
+    # For example, redirect back to the project's topics list:
+    redirect_to project_topics_path(@project), notice: "Topic was successfully deleted."
   end
 
   private
@@ -70,11 +79,22 @@ class TopicsController < ApplicationController
     params.require(:topic).permit(:topic)
   end
 
-  def authorize_user!
-    unless @project.users.include?(current_user) && current_user.admin?
-        flash[:alert] = "Only admins can create a thread."
-        redirect_to project_topic_path(@project)
-    end
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
 
+  def authorize_user!
+    @project = Project.find_by(id: params[:project_id])
+    
+    # Check if the project exists and the current user is associated with the project
+    if @project && @project.users.include?(current_user)
+      # Check the role of the current user within the project
+      project_user = @project.project_users.find_by(user: current_user)
+      if project_user.admin?
+        # Current user is an admin, allow access
+        return
+      end
+    end
+    redirect_to project_path(@project), notice: "Only project admins can create a thread."
   end
 end

@@ -1,0 +1,9 @@
+
+= simple_form_for [@project, @topic] do |f|
+    %div.card
+        %div.card-header
+            %h3 New Thread
+        %div.card-body
+            %div.field.form-group.py-2
+                = f.input :topic, class: "form-control"
+                = f.button :submit, class: "btn btn-secondary"

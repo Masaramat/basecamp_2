@@ -17,8 +17,8 @@
                             %tr
                                 %td= link_to project.name, project_path(project), class: "nav-link text-primary"
                                 %td
-                                    - full_names = project.users.pluck(:firstname, :lastname).map { |first, last| "#{first} #{last}" }
-                                    = full_names.join(", ")   
+                                    - full_names = "#{project.users.first.firstname} #{project.users.first.lastname}"
+                                    = full_names  
                                 %td= link_to "Edit", edit_project_path(project), class: "nav-link text-primary"     
 
                 = link_to "New Project", new_project_path, class: "btn btn-secondary"        

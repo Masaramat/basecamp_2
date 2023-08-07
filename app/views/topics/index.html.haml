@@ -1,0 +1,16 @@
+%div.container
+    %div.card
+        %div.card-header
+            %h1= @project.name
+        %div.cad-body.p-3
+            %ul 
+                - @topics.each do |topic|
+                    %li.nav-link 
+                        = link_to project_topic_path(@project, topic), class: "nav-link text-primary" do                            
+                            %div.d-flex.justify-content-space-between
+                                %h4 
+                                    = topic.topic
+                                    %span 
+                                        %small.mx-5.text-secondary
+                                            = "Created by: #{topic.user.firstname}"
+                            

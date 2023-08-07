@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   resources :projects do
-    resources :topics
+    resources :topics do
+      resources :messages
+    end
+    post 'add_user', on: :member
   end
+
 end

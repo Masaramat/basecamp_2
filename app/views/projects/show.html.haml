@@ -1,35 +1,66 @@
 %div.container.d-flex.justify-content-center
-    %div.col-8
-        %div.card
-            %div.card-header
-                %h3 Project view
-            %div.card-body
-                %p.muted Project name:
-                %h5= @project.name
-                %p.muted Creator:
-                %h5 
-                    - full_names = @project.users.pluck(:firstname, :lastname).map { |first, last| "#{first} #{last}" }
-                    = full_names.join(", ")
-                %p.muted Created at:
-                %h6= @project.created_at
-                %p.muted Last update:
-                %h6= @project.updated_at
+  %div.col-7
+    %div.card.mx-1.p-1
+      %div.card-header
+        %h3 Project view
+      %div.card-body
+        %p.muted Project name:
+        %h5= @project.name
+        %p.muted Creator:
+        %h5
+          - full_names = "#{@project.users.first.firstname} #{@project.users.first.lastname}"
+          = full_names
+        %p.muted Created at:
+        %h6= @project.created_at
+        %p.muted Last update:
+        %h6= @project.updated_at
 
-                = link_to "Delete project", project_path(@project), data: { confirm: "Are you sure you want to delete this project?", turbo_method: :delete }, class: 'btn btn-danger mt-3'
-                = link_to "Back to all projects", projects_path, class: "btn btn-secondary mt-3" 
-    %div.col-4
-        %div.card
-            %div.card-header
-                %h3 Recent threads
-            %div.card-body
-                - @topics.each do |topic|
-                    %h4= link_to topic.topic, project_topic_path(topic), class: "nav-link text-primary"
-                    %p
-                        - creator =  "Created by: #{topic.user.firstname}"
-                        = creator
-                = link_to "View all threads", project_topics_path(@project), class: "btn btn-secondary btn-sm"
-                = link_to "New thread", new_project_topic_path(@project), class: "btn btn-secondary btn-sm"
-                
+        = link_to "Delete project", project_path(@project), data: { confirm: "Are you sure you want to delete this project?", turbo_method: :delete }, class: 'btn btn-danger mt-3'
+        = link_to "Back to all projects", projects_path, class: "btn btn-secondary mt-3" 
 
-                
+      %h3.card-header.mt-2 Project users
 
+      %table.table
+        %thead
+          %tr
+            %th= "Name"
+            %th= "Role"
+            %th= "Action"
+        %tbody
+          - @project_users.each do |project_user|
+            %tr
+              %td
+                = "#{project_user.user.firstname} #{project_user.user.lastname}"
+                = "(you)" if current_user == project_user.user
+              %td= project_user.role
+              %td
+                - if project_user.user != current_user && current_user.project_users.exists?(role: 'admin')
+                  = link_to "Remove", '#', class: 'btn btn-danger btn-sm', data: { user_id: project_user.user.id }
+      - if current_user.project_users.exists?(role: 'admin')
+        = simple_form_for @project, url: add_user_project_path(@project), method: :post, html: { id: 'add-user-form' } do |f|
+          .row.mb-3
+            .col-lg-5
+              = f.input :user_email, required: true, placeholder: 'Enter email', label: false, input_html: { class: "form-control" }
+            .col-lg-4
+              = f.input :user_role, collection: { "Regular" => 0, "Admin" => 1 }, include_blank: "Role", label: false, input_html: { class: "form-control form-select" }
+            .col-lg-3
+              = f.button :submit, "Add", class: "btn-secondary form-control"
+
+  %div.col-5
+    %div.card.mb-2
+      %div.card-header
+        %h3 Recent threads
+      %div.card-body
+        - @topics.each do |topic|
+          %h4= link_to topic.topic, project_topic_path(@project, topic), class: "nav-link text-primary"
+          %p
+            - creator =  "Created by: #{topic.user.firstname}"
+            = creator
+        = link_to "View all threads", project_topics_path(@project), class: "btn btn-secondary btn-sm"
+        = link_to "New thread", new_project_topic_path(@project), class: "btn btn-secondary btn-sm"
+
+    %div.card.mb-2
+      %div.card-header
+        %h3 Recent attachments
+      %div.card-body
+        

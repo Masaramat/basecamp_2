@@ -1,4 +1,5 @@
 class Project < ApplicationRecord
+    attr_accessor :user_email, :user_role
     # Defines rewlationship between projects and users
     has_many :project_users, dependent: :destroy
     has_many :topics, dependent: :destroy

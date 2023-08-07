@@ -2,6 +2,14 @@
     <div class = "card-header bg-secondary text-light text-center">
         <h2>Log in</h2>
     </div>
+
+    <% if flash.any? %>
+    <div class="alert alert-danger text-center">
+      <% flash.each do |key, message| %>
+        <%= message %>
+      <% end %>
+    </div>
+  <% end %>
     <div class = "card-body">
         <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="form-inputs">
