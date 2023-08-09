@@ -5,5 +5,5 @@
             %h3 New Thread
         %div.card-body
             %div.field.form-group.py-2
-                = f.input :topic, class: "form-control"
-                = f.button :submit, class: "btn btn-secondary"
+                = f.input :topic, input_html: {class: 'form-control'}
+                = f.button :submit, class: "btn btn-secondary mt-3"

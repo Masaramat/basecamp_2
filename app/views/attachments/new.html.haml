@@ -1,0 +1,12 @@
+%div.row.d-flex.justify-content-center
+    %div.col-6
+        %div.card
+            %div.card-header
+                %h4.text-center
+                    = "New Attachment"
+            %div.card-body
+                = simple_form_for [@project, @attachment] do |f|
+                    = f.input :attachment_name,  input_html: {class: 'form-control mb-2' }
+                    = f.input :attachment_url, input_html: {class: 'form-control mb-2'}
+                    = f.input :photo, as: :file, input_html: { class: 'no-label form-control mb-2', 'data-direct-upload-url' => 'rails_direct_upload_url' }
+                    = f.button :submit, 'Upload Attachment', class: 'btn btn-secondary mt-2'

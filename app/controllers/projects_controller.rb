@@ -13,8 +13,10 @@ class ProjectsController < ApplicationController
     end
     def show
         @project = Project.find(params['id'])
-        @topics = @project.topics.order(created_at: :desc).limit(3)
+        @topics = @project.topics.order(created_at: :desc).limit(5)
         @project_users = @project.project_users
+        @attachments = @project.attachments.order(created_at: :desc)
+        
     end
     def new
         @project = Project.new

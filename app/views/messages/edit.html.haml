@@ -1,0 +1,9 @@
+%div.card
+    %div.card-header
+        %h3.title
+            = "Edit message"
+    %div.card-body
+        = simple_form_for [@project, @topic, @message] do |f|                   
+            %div.field.form-group.py-2
+                = f.text_area :content, class: "form-control", placeholder: "Enter message"
+                = f.button :submit, class: "btn btn-secondary btn-lg mt-3", value: "Update message"

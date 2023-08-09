@@ -4,6 +4,7 @@ class Project < ApplicationRecord
     has_many :project_users, dependent: :destroy
     has_many :topics, dependent: :destroy
     has_many :users, :through => :project_users
+    has_many :attachments, dependent: :destroy
     # This is to handle foreign key constriant when destroying a project
     before_destroy :delete_project_users
 
